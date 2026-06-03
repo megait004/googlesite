@@ -10,6 +10,12 @@
       box-sizing: border-box;
     }
 
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -98,6 +104,36 @@
       text-decoration: underline;
     }
 
+    body.embed {
+      min-height: 100dvh;
+      padding: 12px;
+      background: linear-gradient(135deg, rgb(227, 243, 234), rgb(217, 234, 250), rgb(250, 233, 239));
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body.embed .wrapper {
+      width: 600px;
+      max-width: none;
+      text-align: left;
+      transform-origin: top center;
+      will-change: transform;
+    }
+
+    body.embed .card {
+      min-height: 508px;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(34, 70, 112, 0.08);
+      margin: 0;
+    }
+
+    body.embed .footnote {
+      margin-top: 16px;
+      text-align: center;
+      padding-bottom: 0;
+    }
+
     @media (max-width: 640px) {
       body {
         padding: 18px 12px 20px;
@@ -174,5 +210,41 @@
       © 2026 Meta · All rights reserved
     </div>
   </div>
+
+  <script>
+    const EMBED_BASE_WIDTH = 600;
+    const EMBED_BASE_HEIGHT = 640;
+
+    function isEmbedded() {
+      try {
+        return globalThis.self !== globalThis.top;
+      } catch {
+        return true;
+      }
+    }
+
+    function fitEmbed() {
+      if (!document.body.classList.contains("embed")) return;
+      const wrapper = document.querySelector(".wrapper");
+      if (!wrapper) return;
+
+      const availableWidth = Math.max(window.innerWidth - 24, 0);
+      const availableHeight = Math.max(window.innerHeight - 24, 0);
+      const scale = Math.min(
+        availableWidth / EMBED_BASE_WIDTH,
+        availableHeight / EMBED_BASE_HEIGHT,
+        1
+      );
+
+      wrapper.style.transform = `scale(${scale})`;
+      wrapper.style.width = `${EMBED_BASE_WIDTH}px`;
+    }
+
+    if (isEmbedded()) {
+      document.body.classList.add("embed");
+      fitEmbed();
+      window.addEventListener("resize", fitEmbed);
+    }
+  </script>
 </body>
 </html>
