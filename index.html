@@ -36,11 +36,9 @@
 
     .card {
       border-radius: 16px;
-      background-image: url("./bg.webp");
-      background-size: cover;
-      background-position: center;
+      background: #ffffff;
       text-align: left;
-      min-height: 508px;
+      min-height: 0;
       padding: 44px 56px 20px;
       box-shadow: 0 8px 28px rgba(34, 70, 112, 0.08);
     }
@@ -53,7 +51,7 @@
 
     h1 {
       margin: 0 0 16px;
-      font-size: 47px;
+      font-size: clamp(32px, 5.2vw, 47px);
       line-height: 1.04;
       letter-spacing: -0.4px;
       font-weight: 800;
@@ -122,7 +120,7 @@
     }
 
     body.embed .card {
-      min-height: 508px;
+      min-height: 0;
       border-radius: 16px;
       box-shadow: 0 8px 28px rgba(34, 70, 112, 0.08);
       margin: 0;
@@ -145,10 +143,9 @@
       }
 
       .card {
-        min-height: 499px;
+        min-height: 0;
         padding: 28px 18px 18px;
-        background-image: linear-gradient(135deg, #f3c9ff 0%, #d5f1ff 100%);
-        background-position: center;
+        background: #ffffff;
         border-radius: 18px;
       }
 
@@ -189,6 +186,28 @@
         font-size: 10.5px;
       }
     }
+
+    @media (max-height: 720px) {
+      body {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 24px 18px 16px;
+      }
+
+      h1 {
+        font-size: clamp(28px, 7vw, 40px);
+      }
+
+      .sub-title {
+        margin-top: 18px;
+      }
+
+      .footnote {
+        margin-top: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -211,40 +230,6 @@
     </div>
   </div>
 
-  <script>
-    const EMBED_BASE_WIDTH = 600;
-    const EMBED_BASE_HEIGHT = 640;
 
-    function isEmbedded() {
-      try {
-        return globalThis.self !== globalThis.top;
-      } catch {
-        return true;
-      }
-    }
-
-    function fitEmbed() {
-      if (!document.body.classList.contains("embed")) return;
-      const wrapper = document.querySelector(".wrapper");
-      if (!wrapper) return;
-
-      const availableWidth = Math.max(window.innerWidth - 24, 0);
-      const availableHeight = Math.max(window.innerHeight - 24, 0);
-      const scale = Math.min(
-        availableWidth / EMBED_BASE_WIDTH,
-        availableHeight / EMBED_BASE_HEIGHT,
-        1
-      );
-
-      wrapper.style.transform = `scale(${scale})`;
-      wrapper.style.width = `${EMBED_BASE_WIDTH}px`;
-    }
-
-    if (isEmbedded()) {
-      document.body.classList.add("embed");
-      fitEmbed();
-      window.addEventListener("resize", fitEmbed);
-    }
-  </script>
 </body>
 </html>
