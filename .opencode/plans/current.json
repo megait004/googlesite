@@ -1,0 +1,10 @@
+{
+  "source": "planner-agent",
+  "phase": "tasks",
+  "status": "approved-for-build",
+  "current": true,
+  "slug": "googlesites-full-page-embed",
+  "tasksFile": ".opencode/plans/googlesites-full-page-embed-tasks.md",
+  "designFile": ".opencode/plans/googlesites-full-page-embed-design.md",
+  "bugfixFile": ".opencode/plans/googlesites-full-page-embed-bugfix.md"
+}
